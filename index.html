@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VETA - Escaneo de Código QR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="imagen/veta.png" alt="Logo VETA">
+    </div>
+    <nav class="nav">
+      <ul>
+        <li>
+          <!-- Botón de inicio de sesión con Google -->
+          <div id="g_id_onload"
+            data-client_id="382757537663-vikqqbqc4gsph7vgh1rtkb1enfgmr0ff.apps.googleusercontent.com"
+            data-context="signin"
+            data-ux_mode="popup"
+            data-callback="handleCredentialResponse"
+            data-auto_select="true">
+          </div>
+          <div class="g_id_signin" data-type="standard"></div>
+        </li>
+        <li><button id="logoutBtn" style="display:none;" onclick="logout()">Cerrar Sesión</button></li>
+      </ul>
+    </nav>
+  </header>
+  
+   <div class="container">
+    <!-- Banner de bienvenida -->
+    <section class="welcome-banner">
+      <h1>Bienvenido a <span class="brand">VETA</span></h1>
+      <p class="subtitle">Soluciones innovadoras en identificación veterinaria</p>
+    </section>
+    
+    <!-- Sección de suscripción -->
+    <section id="subscription">
+      <div class="subscription-box">
+        <div class="subscription-header">PRIMER MES GRATIS</div>
+        <h2 class="plan-title">Plan Mensual</h2>
+        <p class="description">Prueba gratis por 1 mes. Cancela en cualquier momento. Luego se cobrará $20/mes.</p>
+        <ul class="benefits">
+          <li>✔ Acceso ilimitado al escaneo QR</li>
+          <li>✔ Registro y gestión de datos del ganado</li>
+          <li>✔ Soporte prioritario</li>
+        </ul>
+        <button class="subscribe-button" onclick="openPayment('monthly')">Suscribirse Mensual - $20</button>
+      </div>
+      
+      <div class="subscription-box annual">
+        <div class="subscription-header">¡OFERTA ESPECIAL!</div>
+        <h2 class="plan-title">Plan Anual</h2>
+        <p class="description">Aprovecha beneficios exclusivos y ahorra $90 al año.</p>
+        <ul class="benefits">
+          <li>✔ Todo lo del plan mensual</li>
+          <li>✔ Soporte técnico 24/7</li>
+          <li>✔ Acceso a actualizaciones premium</li>
+          <li>✔ Reportes avanzados de gestión</li>
+          <li>✔ Ahorro significativo</li>
+        </ul>
+        <button class="subscribe-button annual" onclick="openPayment('annual')">Suscribirse Anual - $150</button>
+      </div>
+    </section>
+    
+    <section id="paymentSection" class="payment-box" style="display:none;">
+      <h3>Elige una opción de pago:</h3>
+      <div id="paypal-button-container"></div>
+    </section>
+    
+    <section id="scannerSection" style="display:none;">
+      <h2>Escanear Código QR</h2>
+      <p>Presiona el siguiente botón para escanear el código QR de tu ganado:</p>
+      <button id="scanBtn" onclick="window.location.href='QR.html'">Escanear código QR</button>
+    </section>
+  </div>
+  
+  <footer class="footer">
+    <p>&copy; 2025 VETA - Soluciones Veterinarias. Todos los derechos reservados.</p>
+  </footer>
+  
+  <script src="https://www.paypal.com/sdk/js?client-id=ASWQYV9OO5_JSkn_b6KLAfopNc4hXKbV8m2kiHDBOGAYJab0r1NXdw7PJWhSe308h4vITFXKq7OFKd-H"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+  <script>
+    function handleCredentialResponse(response) {
+      const responsePayload = parseJwt(response.credential);
+
+      // Guardar información del usuario en localStorage
+      localStorage.setItem("userName", responsePayload.name);
+      localStorage.setItem("userEmail", responsePayload.email);
+      localStorage.setItem("userPicture", responsePayload.picture);
+      
+      alert("Inicio de sesión exitoso: " + responsePayload.name);
+
+      // Mostrar botón de cierre de sesión
+      document.getElementById("logoutBtn").style.display = "block";
+    }
+
+    function parseJwt(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+
+      return JSON.parse(jsonPayload);
+    }
+
+    function logout() {
+      google.accounts.id.disableAutoSelect();
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userPicture");
+
+      alert("Has cerrado sesión");
+      document.getElementById("logoutBtn").style.display = "none";
+    }
+    
+    function handleCredentialResponse(response) {
+    console.log("ID Token: " + response.credential);
+    
+    // Ocultar el botón de inicio de sesión y mostrar el de cerrar sesión
+    document.querySelector(".g_id_signin").style.display = "none";
+    document.getElementById("logoutBtn").style.display = "block";
+}
+
+document.getElementById("logoutBtn").addEventListener("click", function() {
+    google.accounts.id.disableAutoSelect();
+    alert("Has cerrado sesión");
+
+    // Mostrar el botón de inicio de sesión y ocultar el de cerrar sesión
+    document.querySelector(".g_id_signin").style.display = "block";
+    document.getElementById("logoutBtn").style.display = "none";
+});
+
+  </script>
+</body>
+</html>
