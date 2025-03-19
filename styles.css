@@ -427,3 +427,27 @@ body {
 #logoutBtn:hover {
     background-color: #cc0000;
 }
+
+
+
+
+
+
+
+
+
+.login-message {
+  background-color: #28a745;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  transition: opacity 0.9s ease;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
