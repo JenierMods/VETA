@@ -6,7 +6,159 @@
   <title>VETA - Escaneo de Código QR</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=ASWQYV9OO5_JSkn_b6KLAfopNc4hXKbV8m2kiHDBOGAYJab0r1NXdw7PJWhSe308h4vITFXKq7OFKd-H"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script defer>
+    document.addEventListener("DOMContentLoaded", function () {
+        checkLoginStatus();
+        updateSubscriptionStatus();
+        animateSubscriptionBoxes();
+    });
+
+    // Verificar si el usuario está autenticado
+    function checkLoginStatus() {
+        let userEmail = localStorage.getItem("userEmail");
+
+        if (userEmail) {
+            console.log("Usuario autenticado:", userEmail);
+            document.querySelector(".g_id_signin").style.display = "none";
+            document.getElementById("logoutBtn").style.display = "block";
+        } else {
+            console.log("Usuario no autenticado");
+            document.querySelector(".g_id_signin").style.display = "block";
+            document.getElementById("logoutBtn").style.display = "none";
+        }
+    }
+
+    // Función para actualizar la UI con el estado de suscripción
+    function updateSubscriptionStatus() {
+        let isSubscribed = localStorage.getItem('isSubscribed') === 'true';
+        let lastPaymentDate = localStorage.getItem('lastPaymentDate');
+        let subscriptionType = localStorage.getItem('subscriptionType');
+
+        if (isSubscribed && checkSubscription(lastPaymentDate, subscriptionType)) {
+            document.getElementById('subscription').style.display = 'none';
+            document.getElementById('scannerSection').style.display = 'block';
+            let scanBtn = document.getElementById('scanBtn');
+            if (scanBtn) scanBtn.style.display = 'inline-block';
+        } else {
+            document.getElementById('subscription').style.display = 'block'; // Asegurar que se muestre la suscripción
+            document.getElementById('scannerSection').style.display = 'none';
+            let scanBtn = document.getElementById('scanBtn');
+            if (scanBtn) scanBtn.style.display = 'none';
+        }
+    }
+
+    // Verificar si la suscripción sigue activa
+    function checkSubscription(lastPaymentDate, subscriptionType) {
+        if (!lastPaymentDate || !subscriptionType) return false;
+
+        const paymentDate = new Date(lastPaymentDate);
+        const currentDate = new Date();
+        const diffTime = currentDate - paymentDate;
+        const daysAllowed = subscriptionType === 'annual' ? 365 : 30;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        return diffDays <= daysAllowed;
+    }
+
+    // Mostrar opciones de pago
+    function openPayment(type) {
+        document.getElementById('subscription').style.display = 'none';
+        document.getElementById('paymentSection').style.display = 'block';
+        loadPayPalButton(type);
+    }
+
+    // Cargar botón de pago de PayPal
+    function loadPayPalButton(type) {
+        let price = type === 'annual' ? '150.00' : '20.00';
+        document.getElementById('paypal-button-container').innerHTML = '';
+
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{ amount: { value: price } }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    alert('Pago realizado con éxito. ¡Bienvenido!');
+                    localStorage.setItem('lastPaymentDate', new Date().toISOString());
+                    localStorage.setItem('isSubscribed', 'true');
+                    localStorage.setItem('subscriptionType', type);
+                    updateSubscriptionStatus();
+                    document.getElementById('paymentSection').style.display = 'none';
+                });
+            },
+            onError: function (err) {
+                console.error("Error al procesar el pago", err);
+                alert("Hubo un error con el pago. Intenta de nuevo.");
+            }
+        }).render('#paypal-button-container');
+    }
+
+    // Animación de aparición de las cajas de suscripción
+    function animateSubscriptionBoxes() {
+        const boxes = document.querySelectorAll('.subscription-box');
+        boxes.forEach((box, index) => {
+            setTimeout(() => {
+                box.classList.add('animate');
+            }, 300 * index);
+        });
+    }
+
+    // Cerrar sesión
+    function logout() {
+        localStorage.clear();
+        alert("Has cerrado sesión");
+        checkLoginStatus();
+        updateSubscriptionStatus(); // Asegurar que la UI vuelva a la vista de suscripción
+    }
+
+    function handleCredentialResponse(response) {
+        console.log("ID Token recibido:", response.credential);
+
+        try {
+            const responsePayload = JSON.parse(atob(response.credential.split('.')[1]));
+            localStorage.setItem("userName", responsePayload.name);
+            localStorage.setItem("userEmail", responsePayload.email);
+            localStorage.setItem("userPicture", responsePayload.picture);
+
+            alert("Inicio de sesión exitoso: " + responsePayload.name);
+
+            // Ocultar botón de inicio de sesión si existe
+            let signinBtn = document.querySelector(".g_id_signin");
+            if (signinBtn) signinBtn.style.display = "none";
+
+            // Mostrar botón de cierre de sesión
+            document.getElementById("logoutBtn").style.display = "block";
+
+        } catch (error) {
+            console.error("Error al procesar el token JWT:", error);
+        }
+    }
+
+    function logout() {
+        if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+            google.accounts.id.disableAutoSelect();
+        }
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userPicture");
+
+        alert("Has cerrado sesión");
+
+        // Restaurar visibilidad de botones
+        let signinBtn = document.querySelector(".g_id_signin");
+        if (signinBtn) signinBtn.style.display = "block";
+        document.getElementById("logoutBtn").style.display = "none";
+
+        // Redirigir al usuario para cerrar sesión en Google (opcional)
+        window.location.href = "https://accounts.google.com/Logout";
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", logout);
+  </script>
 </head>
 
 <body>
@@ -32,7 +184,7 @@
     </nav>
   </header>
   
-   <div class="container">
+  <div class="container">
     <!-- Banner de bienvenida -->
     <section class="welcome-banner">
       <h1>Bienvenido a <span class="brand">VETA</span></h1>
@@ -83,62 +235,5 @@
   <footer class="footer">
     <p>&copy; 2025 VETA - Soluciones Veterinarias. Todos los derechos reservados.</p>
   </footer>
-  
-  <script src="https://www.paypal.com/sdk/js?client-id=ASWQYV9OO5_JSkn_b6KLAfopNc4hXKbV8m2kiHDBOGAYJab0r1NXdw7PJWhSe308h4vITFXKq7OFKd-H"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  
-  <script>
-    function handleCredentialResponse(response) {
-      const responsePayload = parseJwt(response.credential);
-
-      // Guardar información del usuario en localStorage
-      localStorage.setItem("userName", responsePayload.name);
-      localStorage.setItem("userEmail", responsePayload.email);
-      localStorage.setItem("userPicture", responsePayload.picture);
-      
-      alert("Inicio de sesión exitoso: " + responsePayload.name);
-
-      // Mostrar botón de cierre de sesión
-      document.getElementById("logoutBtn").style.display = "block";
-    }
-
-    function parseJwt(token) {
-      let base64Url = token.split('.')[1];
-      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-
-      return JSON.parse(jsonPayload);
-    }
-
-    function logout() {
-      google.accounts.id.disableAutoSelect();
-      localStorage.removeItem("userName");
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userPicture");
-
-      alert("Has cerrado sesión");
-      document.getElementById("logoutBtn").style.display = "none";
-    }
-    
-    function handleCredentialResponse(response) {
-    console.log("ID Token: " + response.credential);
-    
-    // Ocultar el botón de inicio de sesión y mostrar el de cerrar sesión
-    document.querySelector(".g_id_signin").style.display = "none";
-    document.getElementById("logoutBtn").style.display = "block";
-}
-
-document.getElementById("logoutBtn").addEventListener("click", function() {
-    google.accounts.id.disableAutoSelect();
-    alert("Has cerrado sesión");
-
-    // Mostrar el botón de inicio de sesión y ocultar el de cerrar sesión
-    document.querySelector(".g_id_signin").style.display = "block";
-    document.getElementById("logoutBtn").style.display = "none";
-});
-
-  </script>
 </body>
 </html>
