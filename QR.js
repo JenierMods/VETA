@@ -1,3 +1,5 @@
+let qrHistory = [];
+let isHistoryVisible = false;
 async function openCamera() {
     try {
         const video = document.getElementById("video");
@@ -33,6 +35,7 @@ function capturePhoto() {
     qrContentBox.style.display = 'block';
     canvas.toBlob(blob => processImage(blob));
 }
+
 function processImage(image) {
     const img = new Image();
     img.src = URL.createObjectURL(image);
@@ -50,6 +53,7 @@ function processImage(image) {
             console.log("QR Detectado:", qrCodeData.data);
             qrContentText.textContent = qrCodeData.data;
             qrContentText.style.color = "green";
+            qrHistory.push(qrCodeData.data);
             if (isValidURL(qrCodeData.data)) {
                 const visitButton = document.createElement('button');
                 visitButton.textContent = 'Ver información';
@@ -105,6 +109,7 @@ function readQRCode(event) {
                 console.log("QR Detectado:", qrCodeData.data);
                 qrContentText.textContent = ` ${qrCodeData.data}`;
                 qrContentText.style.color = "green";
+                qrHistory.push(qrCodeData.data);
                 if (isValidURL(qrCodeData.data)) {
                     const visitButton = document.createElement('button');
                     visitButton.textContent = 'Ver información';
@@ -131,4 +136,85 @@ function readQRCode(event) {
 }
 function triggerFileInput() {
     document.getElementById('fileInput').click();
+}
+function showHistory() {
+    const qrContentBox = document.getElementById("qrContentBox");
+    const qrContentText = document.getElementById("qrContentText");
+    const visitButton = document.querySelector("button.qr-button");
+    if (visitButton) {
+        visitButton.style.display = "none";
+    }
+    if (isHistoryVisible) {
+        qrContentText.innerHTML = 'Aquí aparecerá el contenido del código QR';
+        isHistoryVisible = false;
+        const lastVisitButton = document.querySelector("button.qr-button");
+        if (lastVisitButton) {
+            lastVisitButton.style.display = "block";
+        }
+    } else {
+        qrContentText.innerHTML = "<h2>Historial de QR Escaneados</h2>"; 
+        if (qrHistory.length === 0) {
+            qrContentText.innerHTML += "<p>No hay QR escaneados aún.</p>";
+        } else {
+            let list = document.createElement("ul");
+            qrHistory.forEach(qr => {
+                let listItem = document.createElement("li");
+                if (isValidURL(qr)) {
+                    let link = document.createElement("a");
+                    link.href = qr;
+                    link.textContent = qr;
+                    link.target = "_blank";
+                    link.style.color = "#007BFF";
+                    link.style.textDecoration = "underline";
+                    listItem.appendChild(link);
+                } else {
+                    listItem.textContent = qr;
+                }
+                list.appendChild(listItem);
+            });
+            qrContentText.appendChild(list);
+        }
+        isHistoryVisible = true;
+    }
+}
+document.getElementById("historyButton").addEventListener("click", showHistory);
+function showHistory() {
+    const qrContentBox = document.getElementById("qrContentBox");
+    const qrContentText = document.getElementById("qrContentText");
+    const visitButton = document.querySelector("button.qr-button");
+    if (visitButton) {
+        visitButton.style.display = "none";
+    }
+    if (isHistoryVisible) {
+        qrContentText.innerHTML = 'Aquí aparecerá el contenido del código QR';
+        isHistoryVisible = false;
+        const lastVisitButton = document.querySelector("button.qr-button");
+        if (lastVisitButton) {
+            lastVisitButton.style.display = "block";
+        }
+    } else {
+        qrContentText.innerHTML = "<h2>Historial de QR Escaneados</h2>";
+        if (qrHistory.length === 0) {
+            qrContentText.innerHTML += "<p>No hay QR escaneados aún.</p>";
+        } else {
+            let list = document.createElement("ol");
+            qrHistory.forEach((qr, index) => {
+                let listItem = document.createElement("li");
+                if (isValidURL(qr)) {
+                    let link = document.createElement("a");
+                    link.href = qr;
+                    link.textContent = qr;
+                    link.target = "_blank";
+                    link.style.color = "#007BFF";
+                    link.style.textDecoration = "underline";
+                    listItem.appendChild(link);
+                } else {
+                    listItem.textContent = qr;
+                }
+                list.appendChild(listItem);
+            });
+            qrContentText.appendChild(list);
+        }
+        isHistoryVisible = true;
+    }
 }
