@@ -11,12 +11,24 @@
         <h1>Creador</h1>
         <p>Información sobre el creador de la página web</p>
     </div>
-    <img src="imagen/JenierMods.png" alt="Imagen del creador" class="creator-image">
-    <div class="creator-buttons">
-        <button onclick="openWhatsApp()">WhatsApp</button>
-        <button onclick="openFacebook()">Facebook</button>
-        <button onclick="openGithub()">Github</button>
+    
+    <img id="creatorImage" src="imagen/JenierMods.png" alt="Imagen del creador" class="creator-image">
+    
+    <!-- Control deslizante para cambiar el tamaño de la imagen -->
+    <div class="image-size-control">
+        <label for="image-size"></label>
+        <input type="range" id="image-size" min="100" max="370" value="180" step="10" oninput="resizeImage()">
+        <span id="image-size-value">180px</span>
     </div>
+    
+    <div class="creator-buttons">
+        <button class="btn whatsapp" onclick="openWhatsApp()">WhatsApp</button>
+        <button class="btn facebook" onclick="openFacebook()">Facebook</button>
+        <button class="btn github" onclick="openGithub()">Github</button>
+        <!-- Botón Donar -->
+        <button class="btn donate" onclick="openPayPal()">Donar</button>
+    </div>
+    
     <script src="creador.js"></script>
 </body>
 </html>
