@@ -73,7 +73,6 @@ body.creador-page {
   flex-wrap: wrap;
 }
 
-/* Estilos para los botones */
 .btn {
   background-color: #007BFF;
   color: white;
@@ -88,13 +87,11 @@ body.creador-page {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Efectos hover */
 .btn:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Colores específicos para cada botón */
 .whatsapp {
   background-color: #25D366;
 }
@@ -109,15 +106,12 @@ body.creador-page {
 
 .donate {
   background-color: #28a745;
-  /* Verde para donar */
 }
 
-/* Animación de los botones */
 .btn:active {
   transform: translateY(2px);
 }
 
-/* Footer */
 footer {
   position: absolute;
   bottom: 10px;
