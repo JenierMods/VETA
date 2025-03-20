@@ -1,0 +1,96 @@
+    body.creador-page {
+            background-image: none;
+            background-color: #1abc9c;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .creator-info {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .creator-info h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .creator-info p {
+            font-size: 18px;
+        }
+
+        .creator-image {
+            max-width: 80%;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            background-color: #1abc9c;
+            padding: 30px;
+            animation: bounceIn 1s ease-in-out;
+            cursor: pointer;
+        }
+
+        .creator-image.animate-out {
+            animation: fadeOut 1s ease-in-out forwards;
+        }
+
+        .creator-image.animate-in {
+            animation: bounceIn 1s ease-in-out;
+        }
+
+        .creator-buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .creator-buttons button {
+            background-color: white;
+            color: #1abc9c;
+            border: none;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .creator-buttons button:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            80% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+        }

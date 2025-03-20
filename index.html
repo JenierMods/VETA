@@ -7,12 +7,17 @@
   <title>VETA - Escaneo de Código QR</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://www.paypal.com/sdk/js?client-id=ASWQYV9OO5_JSkn_b6KLAfopNc4hXKbV8m2kiHDBOGAYJab0r1NXdw7PJWhSe308h4vITFXKq7OFKd-H"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AfPV0f3Neb-6AsDBzEG0EdO5T0cXUT9YnbMzeXRncDQ6puE4xW1lq1aB1-MJpWuggwmdZRedZ85UYwzI"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body>
   <header class="header">
+    <!-- Aquí está la imagen "Info del Creador" en el lado izquierdo -->
+    <a href="Infodelcreador.html">
+      <img src="imagen/icon.png" alt="Imagen personalizada" class="top-image">
+    </a>
+    <!-- Aquí está el logo de VETA, alineado con la imagen del creador -->
     <div class="logo">
       <img src="imagen/veta.png" alt="Logo VETA">
     </div>
@@ -38,13 +43,13 @@
       <div class="subscription-box">
         <div class="subscription-header">PRIMER MES GRATIS</div>
         <h2 class="plan-title">Plan Mensual</h2>
-        <p class="description">Prueba gratis por 1 mes. Cancela en cualquier momento. Luego se cobrará <b>$1/mes</b> (por prueba).</p>
+        <p class="description">Prueba gratis por 1 mes. Cancela en cualquier momento. Luego se cobrará <b>$19.99/mes</b> (por prueba).</p>
         <ul class="benefits">
           <li>✔ Acceso ilimitado al escaneo QR</li>
           <li>✔ Registro y gestión de datos del ganado</li>
           <li>✔ Soporte prioritario</li>
         </ul>
-        <button class="subscribe-button" onclick="openPayment('monthly')">Suscribirse Mensual - $1</button>
+        <button class="subscribe-button" onclick="openPayment('monthly')">Suscribirse Mensual - $19.99</button>
       </div>
       
       <div class="subscription-box annual">
@@ -58,7 +63,7 @@
           <li>✔ Reportes avanzados de gestión</li>
           <li>✔ Ahorro significativo</li>
         </ul>
-        <button class="subscribe-button annual" onclick="openPayment('annual')">Suscribirse Anual - $150</button>
+        <button class="subscribe-button annual" onclick="openPayment('annual')">Suscribirse Anual - $149.99</button>
       </div>
     </section>
     
@@ -75,7 +80,7 @@
   </div>
   
   <footer class="footer">
-    <p>&copy;VETA - Vinculación Eficiente de Tecnología para el Agro.</p>
+    <p id="footer-text">&copy; VETA - Vinculación Eficiente de Tecnología para el Agro.</p>
   </footer>
   
   <script src="script.js" defer></script>
