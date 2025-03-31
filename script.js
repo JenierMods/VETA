@@ -9,19 +9,13 @@ function checkLoginStatus() {
     console.log("Usuario autenticado:", userEmail);
     document.querySelector(".g_id_signin").style.display = "none";
     document.getElementById("logoutBtn").style.display = "block";
+    updateBonitaVisibility(userEmail);
   } else {
     console.log("Usuario no autenticado");
     document.querySelector(".g_id_signin").style.display = "block";
     document.getElementById("logoutBtn").style.display = "none";
+    document.getElementById("bonita").style.display = "none";
   }
-}
-function getUserSubscription(email) {
-  if (!email) return null;
-  return JSON.parse(localStorage.getItem(`subscription_${email}`)) || null;
-}
-function saveUserSubscription(email, subscriptionData) {
-  if (!email) return;
-  localStorage.setItem(`subscription_${email}`, JSON.stringify(subscriptionData));
 }
 function updateSubscriptionStatus() {
   let userEmail = localStorage.getItem("userEmail");
@@ -38,6 +32,14 @@ function updateSubscriptionStatus() {
     if (scanBtn) scanBtn.style.display = 'none';
   }
 }
+function getUserSubscription(email) {
+  if (!email) return null;
+  return JSON.parse(localStorage.getItem(`subscription_${email}`)) || null;
+}
+function saveUserSubscription(email, subscriptionData) {
+  if (!email) return;
+  localStorage.setItem(`subscription_${email}`, JSON.stringify(subscriptionData));
+}
 function checkSubscription(lastPaymentDate, subscriptionType) {
   if (!lastPaymentDate || !subscriptionType) return false;
   const paymentDate = new Date(lastPaymentDate);
@@ -46,6 +48,14 @@ function checkSubscription(lastPaymentDate, subscriptionType) {
   const daysAllowed = subscriptionType === 'annual' ? 365 : 30;
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   return diffDays <= daysAllowed;
+}
+function updateBonitaVisibility(userEmail) {
+  let subscriptionData = getUserSubscription(userEmail);
+  if (subscriptionData && checkSubscription(subscriptionData.lastPaymentDate, subscriptionData.subscriptionType)) {
+    document.getElementById("bonita").style.display = "block";
+  } else {
+    document.getElementById("bonita").style.display = "none";
+  }
 }
 function openPayment(type) {
   document.getElementById('subscription').style.display = 'none';
@@ -76,6 +86,7 @@ function loadPayPalButton(type) {
         };
         saveUserSubscription(userEmail, subscriptionData);
         updateSubscriptionStatus();
+        updateBonitaVisibility(userEmail);
         document.getElementById('paymentSection').style.display = 'none';
       });
     },
@@ -110,6 +121,7 @@ function logout() {
   }, 3000);
   checkLoginStatus();
   updateSubscriptionStatus();
+  document.getElementById("bonita").style.display = "none";
 }
 function handleCredentialResponse(response) {
   console.log("ID Token recibido:", response.credential);
@@ -132,8 +144,99 @@ function handleCredentialResponse(response) {
     if (signinBtn) signinBtn.style.display = "none";
     document.getElementById("logoutBtn").style.display = "block";
     updateSubscriptionStatus();
+    updateBonitaVisibility(responsePayload.email);
   } catch (error) {
     console.error("Error al procesar el token JWT:", error);
   }
 }
-changeFooterTextSize(13);
+changeFooterTextSize(5);
+document.addEventListener("DOMContentLoaded", function() {
+  checkLoginStatus();
+  updateSubscriptionStatus();
+  animateSubscriptionBoxes();
+});
+function checkLoginStatus() {
+  let userEmail = localStorage.getItem("userEmail");
+  if (userEmail) {
+    console.log("Usuario autenticado:", userEmail);
+    document.querySelector(".g_id_signin").style.display = "none";
+    document.getElementById("logoutBtn").style.display = "block";
+    updateBonitaVisibility(userEmail);
+    updateFooterTextVisibility(userEmail);
+  } else {
+    console.log("Usuario no autenticado");
+    document.querySelector(".g_id_signin").style.display = "block";
+    document.getElementById("logoutBtn").style.display = "none";
+    document.getElementById("bonita").style.display = "none";
+    document.getElementById("footer-text").style.display = "block";
+  }
+}
+function updateSubscriptionStatus() {
+  let userEmail = localStorage.getItem("userEmail");
+  let subscriptionData = getUserSubscription(userEmail);
+  if (subscriptionData && checkSubscription(subscriptionData.lastPaymentDate, subscriptionData.subscriptionType)) {
+    document.getElementById('subscription').style.display = 'none';
+    document.getElementById('scannerSection').style.display = 'block';
+    let scanBtn = document.getElementById('scanBtn');
+    if (scanBtn) scanBtn.style.display = 'inline-block';
+    updateFooterTextVisibility(userEmail);
+  } else {
+    document.getElementById('subscription').style.display = 'block';
+    document.getElementById('scannerSection').style.display = 'none';
+    let scanBtn = document.getElementById('scanBtn');
+    if (scanBtn) scanBtn.style.display = 'none';
+  }
+}
+function updateFooterTextVisibility(userEmail) {
+  let subscriptionData = getUserSubscription(userEmail);
+  if (subscriptionData && checkSubscription(subscriptionData.lastPaymentDate, subscriptionData.subscriptionType)) {
+    document.getElementById("footer-text").style.display = "none";
+  } else {
+    document.getElementById("footer-text").style.display = "block";
+  }
+}
+function getUserSubscription(email) {
+  if (!email) return null;
+  return JSON.parse(localStorage.getItem(`subscription_${email}`)) || null;
+}
+function saveUserSubscription(email, subscriptionData) {
+  if (!email) return;
+  localStorage.setItem(`subscription_${email}`, JSON.stringify(subscriptionData));
+}
+function checkSubscription(lastPaymentDate, subscriptionType) {
+  if (!lastPaymentDate || !subscriptionType) return false;
+  const paymentDate = new Date(lastPaymentDate);
+  const currentDate = new Date();
+  const diffTime = currentDate - paymentDate;
+  const daysAllowed = subscriptionType === 'annual' ? 365 : 30;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays <= daysAllowed;
+}
+function updateBonitaVisibility(userEmail) {
+  let subscriptionData = getUserSubscription(userEmail);
+  if (subscriptionData && checkSubscription(subscriptionData.lastPaymentDate, subscriptionData.subscriptionType)) {
+    document.getElementById("bonita").style.display = "block";
+  } else {
+    document.getElementById("bonita").style.display = "none";
+  }
+}
+function logout() {
+  localStorage.removeItem("userEmail");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("userPicture");
+  console.log("Usuario ha cerrado sesión");
+  const logoutMessage = document.createElement('div');
+  logoutMessage.classList.add('login-message');
+  logoutMessage.textContent = "Has cerrado sesión exitosamente.";
+  document.body.appendChild(logoutMessage);
+  setTimeout(() => {
+    logoutMessage.style.opacity = '0';
+    setTimeout(() => {
+      logoutMessage.remove();
+    }, 500);
+  }, 3000);
+  checkLoginStatus();
+  updateSubscriptionStatus();
+  document.getElementById("bonita").style.display = "none";
+  document.getElementById("footer-text").style.display = "block";
+}
