@@ -1,0 +1,208 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #f4f4f9;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #009688;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 2.5em;
+  margin: 0;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}
+
+label {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+  display: block;
+  font-weight: bold;
+  color: #333;
+}
+
+textarea, input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1em;
+  transition: border-color 0.3s ease;
+}
+
+textarea:focus, input[type="email"]:focus {
+  border-color: #009688;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: #009688;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #00796b;
+}
+
+.respuesta {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.respuesta p {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+#whatsappBtn, #gmailBtn {
+  width: 48%;
+  padding: 12px;
+  margin: 5px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+#whatsappBtn {
+  background-color: #25D366;
+  color: white;
+}
+
+#whatsappBtn:hover {
+  background-color: #128C7E;
+}
+
+#gmailBtn {
+  background-color: #D14836;
+  color: white;
+}
+
+#gmailBtn:hover {
+  background-color: #C1351D;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #f4f4f9;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #009688;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 2.5em;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.toggle-btn {
+  margin-top: 20px;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.toggle-btn:hover {
+  background-color: #e67e22;
+}
+
+.historial {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 100%;
+  max-width: 500px;
+}
+
+.historial h2 {
+  font-size: 1.8em;
+  color: #009688;
+  margin-bottom: 15px;
+}
+
+.historial ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.historial li {
+  font-size: 1em;
+  margin-bottom: 8px;
+  color: #555;
+}

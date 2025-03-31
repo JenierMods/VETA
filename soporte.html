@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soporte - VETA</title>
+  <link rel="stylesheet" href="soporte.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Soporte - VETA</h1>
+  </header>
+  <div class="container">
+    <form id="reclamacionForm">
+      <label for="reclamacion">Escribe tu inquietud o solicitud:</label>
+      <textarea id="reclamacion" name="reclamacion" rows="4" required></textarea>
+      <label for="email">Tu correo electrónico:</label>
+      <input type="email" id="email" name="email" required>
+      <button type="submit">Enviar Solicitud</button>
+    </form>
+    <div id="respuesta" class="respuesta" style="display:none;">
+      <p>Gracias por escribir su inquietud o solicitudes a el soporte técnico de VETA, Le responderemos lo mas pronto posible muchas gracias:</p>
+      <button id="whatsappBtn" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+      <button id="gmailBtn" onclick="enviarCorreo()">Enviar por Gmail</button>
+    </div>
+    <button id="toggleReglasBtn" class="toggle-btn">📜 Reglas</button>
+    <section id="historial" class="historial" style="display:none;">
+      <h2>Reglas del Soporte</h2>
+      <p>Lo que puedes enviar:</p>
+      <p>✔️</p>
+      <ul>
+        <li>✔️Consultas generales sobre el servicio.</li>
+        <li>✔️Problemas técnicos con el escáner QR o aplicación.</li>
+        <li>✔️Sugerencias sobre la mejora del servicio.</li>
+        <li>✔️Problemas relacionados con tu suscripción.</li>
+      </ul>
+      <p>Lo que no puedes enviar:</p>
+      <p> 🚫</p>
+      <ul>
+        <li>🚫Lenguaje ofensivo o insultante.</li>
+        <li>🚫Reclamaciones fuera del alcance de nuestro servicio.</li>
+        <li>🚫Mensajes con contenido discriminatorio o inapropiado.</li>
+        <li>🚫Mensajes con información personal de otras personas sin su consentimiento.</li>
+      </ul>
+    </section>
+  </div>
+  <script src="soporte.js"></script>
+</body>
+</html>
