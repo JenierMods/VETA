@@ -36,7 +36,7 @@ function enviarWhatsApp() {
         alert("Por favor, complete todos los campos.");
         return;
     }
-    const numeroWhatsApp = "+50577530939";
+    const numeroWhatsApp = "+50575345231";
     const texto = encodeURIComponent(`Hola, soy ${nombre}. Tengo la siguiente reclamación: ${mensaje}`);
     window.open(`https://wa.me/${numeroWhatsApp}?text=${texto}`, "_blank");
 }
@@ -65,7 +65,7 @@ function enviarWhatsApp() {
   const reclamacion = localStorage.getItem("reclamacion");
   const email = localStorage.getItem("email");
   const message = `Reclamación: ${reclamacion}\nCorreo: ${email}`;
-  const phoneNumber = "+50577530939";
+  const phoneNumber = "+50575345231";
   const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(whatsappLink, "_blank");
   localStorage.removeItem("reclamacion");
