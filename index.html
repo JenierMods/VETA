@@ -20,27 +20,42 @@
     <nav class="nav">
       <ul>
         <li>
-          <div id="g_id_onload" data-client_id="382757537663-vikqqbqc4gsph7vgh1rtkb1enfgmr0ff.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse" data-auto_select="true">
-          </div>
-          <div class="g_id_signin" data-type="standard"></div>
+          <img src="imagen/login.png" alt="Iniciar Sesión" class="login-icon" onclick="openLoginModal()">
         </li>
-        <li><button id="logoutBtn" style="display:none;" onclick="logout()">Cerrar Sesión</button></li>
       </ul>
     </nav>
   </header>
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeLoginModal()">&times;</span>
+      <h2>Iniciar Sesión</h2>
+      <p>Accede a tu cuenta para gestionar tu suscripción</p>
+      <div id="google-login">
+        <div id="g_id_onload" 
+          data-client_id="382757537663-vikqqbqc4gsph7vgh1rtkb1enfgmr0ff.apps.googleusercontent.com" 
+          data-context="signin" 
+          data-ux_mode="popup" 
+          data-callback="handleCredentialResponse" 
+          data-auto_select="false">
+        </div>
+        <div class="g_id_signin" data-type="standard"></div>
+      </div>
+      <button id="logoutBtn" class="logout-btn" style="display:none;" onclick="logout()">Cerrar Sesión</button>
+    </div>
+  </div>
   <div class="container">
     <section class="welcome-banner">
       <h1>Bienvenido a <span class="brand">VETA</span></h1>
-      <p class="subtitle">Soluciones innovadoras en identificación bovina</p>
+      <p class="subtitle">QR soluciones tecnológicas para el agro.</p>
     </section>
     <section id="subscription">
       <div class="subscription-box">
         <div class="subscription-header">PRIMER MES GRATIS</div>
         <h2 class="plan-title">Plan Mensual</h2>
-        <p class="description">Prueba gratis por 1 mes. Cancela en cualquier momento. Luego se cobrará <b>$19.99/mes</b> (por prueba).</p>
+        <p class="description">Prueba gratis por 1 mes. Cancela en cualquier momento. Luego se cobrará <b>$19.99/mes</b>.</p>
         <ul class="benefits">
           <li>✔ Acceso ilimitado al escaneo QR</li>
-          <li>✔ Ver Registro de los datos del ganado</li>
+          <li>✔ Ver registro de los datos del ganado</li>
           <li>✔ Ver información de la finca</li>
         </ul>
         <button class="subscribe-button" onclick="openPayment('monthly')">Suscribirse Mensual - $19.99</button>
@@ -48,12 +63,13 @@
       <div class="subscription-box annual">
         <div class="subscription-header">¡OFERTA ESPECIAL!</div>
         <h2 class="plan-title">Plan Anual</h2>
-        <p class="description">Aprovecha beneficios exclusivos y ahorra $90 al año.</p>
+        <p class="description">Aprovecha beneficios exclusivos y ahorra <b>$90</b> anualmente.</p>
         <ul class="benefits">
           <li>✔ Todo lo del plan mensual</li>
-          <li>✔ Hacer pedidos rapidos de los QR</li>
-          <li>✔ Respuesta rapida a sus errores</li <li>✔ Acceso a actualizaciones premium</li>
-          <li>✔ Ahorro significativo de 90$</li>
+          <li>✔ Realizar pedidos rápidos de los códigos QR</li>
+          <li>✔ Atención rápida a incidencias</li>
+          <li>✔ Acceso a actualizaciones premium</li>
+          <li>✔ Ahorro significativo de $90</li>
         </ul>
         <button class="subscribe-button annual" onclick="openPayment('annual')">Suscribirse Anual - $149.99</button>
       </div>
@@ -68,14 +84,14 @@
       <button id="scanBtn" onclick="window.location.href='QR.html'">Escanear código QR</button>
     </section>
   </div>
-<footer class="footer">
-  <p id="footer-text">&copy; VETA - Vinculación Eficiente de Tecnología para el Agro.
-  <div id="bonita" class="bonita" style="display:none;">
-    <a href="soporte.html">
-      <img src="imagen/soporte.png" alt="Soporte" class="support-icon">
-    </a>
-  </p>
-</footer>
+  <footer class="footer">
+    <p id="footer-text">&copy; VETA - Vinculación Eficiente de Tecnología para el Agro.</p>
+    <div id="bonita" class="bonita" style="display:none;">
+      <a href="soporte.html">
+        <img src="imagen/soporte.png" alt="Icono de soporte" class="support-icon">
+      </a>
+    </div>
+  </footer>
   <script src="script.js" defer></script>
 </body>
 </html>
