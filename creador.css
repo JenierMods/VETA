@@ -38,8 +38,8 @@ body.creador-page {
 }
 
 .creator-image {
-  width: 320px;
-  height: 380px;
+  width: 300px;
+  height: 330px;
   border-radius: 15px;
   border: 6px solid #007BFF;
   margin-top: 30px;
@@ -48,7 +48,7 @@ body.creador-page {
 }
 
 .image-size-control {
-  margin-top: 30px;
+  margin-top: px;
   display: flex;
   flex-direction: column;
   align-items: center;
