@@ -589,3 +589,10 @@ body {
       display: block;
       margin: 20px auto 0;
     }
+    
+    
+  .Antes {
+  font-size: 0.6em;
+  color: red;
+  margin: 1px 0;
+}
