@@ -27,7 +27,7 @@ function enviarCorreo() {
     }
     const asunto = encodeURIComponent("Reclamación de Cliente - VETA");
     const cuerpo = encodeURIComponent(`Nombre: ${nombre}%0AEmail: ${correo}%0A%0AMensaje:%0A${mensaje}`);
-    window.location.href = `mailto:VETANCR@gmail.com?subject=${asunto}&body=${cuerpo}`;
+    window.location.href = `mailto:VETANICARAGUA@gmail.com?subject=${asunto}&body=${cuerpo}`;
 }
 function enviarWhatsApp() {
     const nombre = document.getElementById("nombre").value;
