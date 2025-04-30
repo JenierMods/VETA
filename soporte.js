@@ -53,7 +53,7 @@ document.getElementById("reclamacionForm").addEventListener("submit", function (
 function enviarCorreo() {
   const reclamacion = localStorage.getItem("reclamacion");
   const email = localStorage.getItem("email");
-  const mailtoLink = `mailto:VETANCR@gmail.com?subject=Reclamación desde VETA&body=${encodeURIComponent(reclamacion)}`;
+  const mailtoLink = `mailto: VETANICARAGUA@gmail.com?subject=Reclamación desde VETA&body=${encodeURIComponent(reclamacion)}`;
   window.location.href = mailtoLink;
   localStorage.removeItem("reclamacion");
   localStorage.removeItem("email");
